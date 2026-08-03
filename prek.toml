@@ -1,0 +1,28 @@
+minimum_prek_version = "0.4.11"
+default_install_hook_types = ["pre-commit", "commit-msg"]
+
+[[repos]]
+repo = "local"
+
+[[repos.hooks]]
+id = "ruff-format"
+name = "ruff format"
+entry = "uv run ruff format"
+language = "system"
+types_or = ["python", "pyi"]
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "ruff-check"
+name = "ruff check"
+entry = "uv run ruff check --fix --exit-non-zero-on-fix"
+language = "system"
+types_or = ["python", "pyi"]
+stages = ["pre-commit"]
+
+[[repos.hooks]]
+id = "cog-verify-commit-msg"
+name = "cocogitto conventional commit verify"
+entry = "cog verify --file"
+language = "system"
+stages = ["commit-msg"]

@@ -1,0 +1,58 @@
+[project]
+name = "fastapi-template"
+version = "0.1.0"
+description = "FastAPI template with strict typing and repository pattern."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+  "fastapi>=0.115.0,<1.0.0",
+  "pydantic>=2.8.0,<3.0.0",
+  "uvicorn[standard]>=0.30.0,<1.0.0",
+]
+
+[project.scripts]
+dev = "fastapi_template.main:run_dev"
+
+[dependency-groups]
+dev = [
+  "basedpyright>=1.29.1,<2.0.0",
+  "httpx>=0.28.1,<1.0.0",
+  "mkdocs>=1.6.1,<2.0.0",
+  "mkdocs-material>=9.6.18,<10.0.0",
+  "mkdocstrings[python]>=0.30.0,<1.0.0",
+  "prek>=0.4.11,<1.0.0",
+  "pytest>=8.4.1,<9.0.0",
+  "ruff>=0.12.7,<1.0.0",
+]
+
+[build-system]
+requires = ["hatchling>=1.27.0"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/fastapi_template"]
+
+[tool.pytest.ini_options]
+addopts = "-q"
+testpaths = ["tests"]
+filterwarnings = [
+  "ignore::starlette.exceptions.StarletteDeprecationWarning",
+]
+
+[tool.ruff]
+line-length = 100
+target-version = "py312"
+src = ["src", "tests"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "D", "ANN", "N"]
+ignore = ["D203", "D213"]
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**/*.py" = ["D", "ANN"]
+
+[tool.ruff.format]
+docstring-code-format = true

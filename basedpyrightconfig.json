@@ -1,0 +1,9 @@
+{
+  "$schema": "https://raw.githubusercontent.com/DetachHead/basedpyright/main/docs/config.schema.json",
+  "pythonVersion": "3.12",
+  "typeCheckingMode": "strict",
+  "include": ["src"],
+  "exclude": [".venv", "tests", "**/__pycache__"],
+  "reportMissingTypeStubs": "none",
+  "reportUnusedFunction": "none"
+}

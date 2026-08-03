@@ -1,0 +1,52 @@
+name: CI
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  quality:
+    name: Format, lint, type-check, and test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup uv (Rust)
+        uses: astral-sh/setup-uv@v6
+        with:
+          enable-cache: true
+
+      - name: Install Python with uv
+        run: uv python install 3.12
+
+      - name: Sync dependencies
+        run: uv sync --dev
+
+      - name: Run prek hooks (format + lint)
+        run: uv run prek run --all-files
+
+      - name: Type check (strict)
+        run: uv run basedpyright --project basedpyrightconfig.json
+
+      - name: Run tests
+        run: uv run pytest
+
+  typos:
+    name: Spell check (Rust typos)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Run typos
+        uses: crate-ci/typos@v1.35.5
+
+  formatting:
+    name: dprint check (Rust)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Check markdown/toml/json formatting
+        uses: dprint/check@v2.3
