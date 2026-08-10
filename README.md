@@ -7,7 +7,7 @@ Template repository for FastAPI projects with:
 - **Google-style docstrings** enforced by `ruff` (`pydocstyle` convention).
 - **Prek hooks** for always-on formatting/linting and commit message validation.
 - **Rust-first tooling in CI** (`uv`, `ruff`, `typos`, `dprint`, `cocogitto` for releases).
-- **Automated dependency updates** via Renovate with automerge rules.
+- **Automated dependency updates** via Dependabot with automerge rules.
 - **Material for MkDocs** docs site with API docs generated from docstrings.
 - **Containerfile** uses distroless base image
 - **Container-compose** ships with full observability stack
@@ -103,11 +103,13 @@ Releases and changelog generation use **cocogitto**:
 
 ## Dependency updates
 
-Renovate is configured via `.github/renovate.json` and scheduled in `.github/workflows/renovate.yml`.
+Dependabot is configured via `.github/dependabot.yml`, with automerge handled by `.github/workflows/dependabot-auto-merge.yml`.
 
-- GitHub Actions and Python (`uv`/PyPI) updates use a **6-day cooldown**.
-- Safe updates are **automerge-enabled**.
-- Add a repository secret named `RENOVATE_TOKEN` (PAT or GitHub App token) for the workflow.
+- Python (`uv`) and GitHub Actions updates are checked **weekly** and grouped into a single PR per ecosystem.
+- Updates use a **6-day cooldown** (14 days for major bumps).
+- Transitive dependencies in `uv.lock` are refreshed too (`dependency-type: all`), the Dependabot equivalent of lock file maintenance.
+- Automerge (approve + `gh pr merge --auto --squash`) applies to all GitHub Actions updates and to non-major Python updates; major Python bumps stay manual.
+- Requires **Allow auto-merge** in the repository settings; merges still wait for the required CI checks.
 
 ## Documentation site (MkDocs + Material)
 
