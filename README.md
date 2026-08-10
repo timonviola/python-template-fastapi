@@ -124,3 +124,4 @@ uv run mkdocs build
   regenerated automatically on every `mkdocs build`/`serve` via `hooks/export_openapi.py`
   (backed by `scripts/export_openapi.py`).
 - Theme supports light mode (**white + teal**) and dark mode (**dark-gray + orange**).
+
