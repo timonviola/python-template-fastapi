@@ -18,8 +18,8 @@ updates:
       default-days: 6
       semver-major-days: 14
     commit-message:
-      prefix: "chore(deps)"
-      prefix-development: "chore(deps-dev)"
+      prefix: "chore"
+      prefix-development: "chore"
       include: "scope"
     labels:
       - "dependencies"
@@ -49,7 +49,7 @@ updates:
     cooldown:
       default-days: 6
     commit-message:
-      prefix: "ci(deps)"
+      prefix: "ci"
       include: "scope"
     labels:
       - "dependencies"
