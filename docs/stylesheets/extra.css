@@ -17,3 +17,15 @@
 .md-header {
   backdrop-filter: saturate(140%) blur(8px);
 }
+
+/* Swagger UI ships its own dark theme (gated behind `html.dark-mode`,
+   toggled in docs/openapi.md to match Material's color scheme). Only add
+   the extra visual tweaks that aren't part of that built-in theme. */
+html.dark-mode .swagger-ui .opblock {
+  border: #757579;
+  border-style: solid;
+  border-radius: 5px;
+  border-width: thin;
+  margin-right: 10px;
+  margin-left: 10px;
+}

@@ -5,8 +5,15 @@ __pycache__/
 .ruff_cache/
 .basedpyright/
 .coverage
+.git/
+.github/
+.gitignore
 .DS_Store
 dist/
 build/
 site/
-docs/openapi.json
+docs/
+tests/
+Dockerfile
+docker-compose.yml
+CHANGELOG.md

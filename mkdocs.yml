@@ -57,6 +57,9 @@ markdown_extensions:
 extra_css:
   - stylesheets/extra.css
 
+hooks:
+  - hooks/export_openapi.py
+
 nav:
   - Home: index.md
   - API Reference:
@@ -66,3 +69,4 @@ nav:
       - Services: reference/services.md
       - Repositories: reference/repositories.md
       - Domain: reference/domain.md
+  - OpenAPI reference: openapi.md

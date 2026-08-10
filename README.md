@@ -9,6 +9,8 @@ Template repository for FastAPI projects with:
 - **Rust-first tooling in CI** (`uv`, `ruff`, `typos`, `dprint`, `cocogitto` for releases).
 - **Automated dependency updates** via Renovate with automerge rules.
 - **Material for MkDocs** docs site with API docs generated from docstrings.
+- **Containerfile** uses distroless base image
+- **Container-compose** ships with full observability stack
 
 ## Quick start
 
@@ -41,8 +43,42 @@ Supported environment variables:
 - `PORT`
 - `API_PREFIX`
 - `FASTAPI_TEMPLATE_CONFIG` (optional custom TOML path)
+- `OTEL_EXPORTER_OTLP_ENDPOINT` (optional; enables OpenTelemetry tracing when set)
+- `OTEL_SERVICE_NAME` (optional; defaults to `fastapi-template`)
+- `LOG_LEVEL` (optional; defaults to `INFO`)
 
 Tests are intentionally run in CI only by default.
+
+## Observability (OpenTelemetry + Prometheus + Grafana Tempo)
+
+The app ships with OpenTelemetry instrumentation for tracing (`opentelemetry-instrumentation-fastapi`)
+and trace-correlated structured logging. Tracing is **opt-in**: it only activates when
+`OTEL_EXPORTER_OTLP_ENDPOINT` is set, so local dev and tests run without a collector.
+
+Spin up a full observability stack (OTel Collector → Grafana Tempo for traces, Prometheus for
+span/service-graph metrics, Grafana for visualization) with:
+
+```bash
+docker compose up --build
+```
+
+- App: `http://localhost:8000` (see `/v1/docs` for interactive Swagger UI)
+- Grafana: `http://localhost:3000` (anonymous admin access, Tempo + Prometheus pre-provisioned)
+- Prometheus: `http://localhost:9090`
+- Tempo query API: `http://localhost:3200`
+
+Generate some traffic (e.g. `curl http://localhost:8000/v1/healthz`), then open Grafana → Explore →
+Tempo to search and view traces, or the "FastAPI Template - Requests" dashboard for span-derived
+metrics.
+
+## Container image
+
+A production Dockerfile (multi-stage, `uv`-based) is included:
+
+```bash
+docker build -t fastapi-template .
+docker run -p 8000:8000 fastapi-template
+```
 
 ## Project layout
 
@@ -84,4 +120,7 @@ uv run mkdocs build
 ```
 
 - API reference is generated from source docstrings via `mkdocstrings`.
+- An interactive **OpenAPI reference** page renders the live schema with Swagger UI; it's
+  regenerated automatically on every `mkdocs build`/`serve` via `hooks/export_openapi.py`
+  (backed by `scripts/export_openapi.py`).
 - Theme supports light mode (**white + teal**) and dark mode (**dark-gray + orange**).

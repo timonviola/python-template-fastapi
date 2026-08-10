@@ -6,6 +6,11 @@ readme = "README.md"
 requires-python = ">=3.12"
 dependencies = [
   "fastapi>=0.115.0,<1.0.0",
+  "opentelemetry-api>=1.44.0",
+  "opentelemetry-exporter-otlp-proto-grpc>=1.44.0",
+  "opentelemetry-instrumentation-fastapi>=0.65b0",
+  "opentelemetry-instrumentation-logging>=0.65b0",
+  "opentelemetry-sdk>=1.44.0",
   "pydantic>=2.8.0,<3.0.0",
   "uvicorn[standard]>=0.30.0,<1.0.0",
 ]
@@ -22,6 +27,7 @@ dev = [
   "mkdocstrings[python]>=0.30.0,<1.0.0",
   "prek>=0.4.11,<1.0.0",
   "pytest>=8.4.1,<9.0.0",
+  "pytest-cov>=7.1.0",
   "ruff>=0.12.7,<1.0.0",
 ]
 
@@ -33,11 +39,25 @@ build-backend = "hatchling.build"
 packages = ["src/fastapi_template"]
 
 [tool.pytest.ini_options]
-addopts = "-q"
+addopts = "-q --cov=fastapi_template --cov-report=term-missing"
 testpaths = ["tests"]
 filterwarnings = [
   "ignore::starlette.exceptions.StarletteDeprecationWarning",
 ]
+
+[tool.coverage.run]
+source = ["src/fastapi_template"]
+branch = true
+
+[tool.coverage.report]
+skip_covered = false
+show_missing = true
+exclude_lines = [
+  "pragma: no cover",
+  "if TYPE_CHECKING:",
+  "\\.\\.\\.",
+]
+
 
 [tool.ruff]
 line-length = 100

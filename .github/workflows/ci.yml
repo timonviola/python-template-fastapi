@@ -30,7 +30,7 @@ jobs:
       - name: Type check (strict)
         run: uv run basedpyright --project basedpyrightconfig.json
 
-      - name: Run tests
+      - name: Run tests (with coverage)
         run: uv run pytest
 
   typos:

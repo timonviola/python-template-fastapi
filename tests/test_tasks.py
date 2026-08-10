@@ -1,5 +1,7 @@
 """Task endpoint tests."""
 
+from uuid import uuid4
+
 from fastapi.testclient import TestClient
 
 from fastapi_template.config import AppConfig
@@ -38,3 +40,21 @@ def test_mark_task_done() -> None:
     mark_done_response = client.post(f"/v1/tasks/{created_task['id']}/done")
     assert mark_done_response.status_code == 200
     assert mark_done_response.json()["done"] is True
+
+
+def test_create_task_with_blank_title_returns_400() -> None:
+    client = _create_client()
+
+    response = client.post("/v1/tasks/", json={"title": "   "})
+
+    assert response.status_code == 400
+    assert response.json()["detail"] == "Task title cannot be blank."
+
+
+def test_mark_unknown_task_done_returns_404() -> None:
+    client = _create_client()
+
+    response = client.post(f"/v1/tasks/{uuid4()}/done")
+
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Task not found."
