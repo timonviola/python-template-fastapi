@@ -4,13 +4,25 @@
     "config:best-practices",
     ":semanticCommits"
   ],
+  "pep723": {
+    "managerFilePatterns": [
+      "docs/build.py",
+      "scripts/**/*.py"
+    ]
+  },
   "dependencyDashboard": true,
+  "timezone": "Europe/Berlin",
   "minimumReleaseAge": "6 days",
+  "prHourlyLimit": 0,
+  "prConcurrentLimit": 0,
+  "automergeStrategy": "squash",
   "lockFileMaintenance": {
     "enabled": true,
-    "automerge": true
+    "automerge": true,
+    "platformAutomerge": true
   },
   "packageRules": [
+    "minimumReleaseAge": "1 week",
     {
       "description": "Automerge GitHub Actions updates after cooldown",
       "matchManagers": [
@@ -18,13 +30,12 @@
       ],
       "automerge": true,
       "automergeType": "pr",
-      "platformAutomerge": true,
-      "minimumReleaseAge": "6 days"
+      "platformAutomerge": true
     },
     {
       "description": "Automerge non-major Python/uv dependency updates after cooldown",
-      "matchDatasources": [
-        "pypi"
+      "matchManagers": [
+        "pep621"
       ],
       "matchUpdateTypes": [
         "minor",
@@ -34,8 +45,14 @@
       ],
       "automerge": true,
       "automergeType": "pr",
-      "platformAutomerge": true,
-      "minimumReleaseAge": "6 days"
+      "platformAutomerge": true
+    },
+    {
+      "description": "Keep major updates manual so breaking changes get reviewed",
+      "matchUpdateTypes": [
+        "major"
+      ],
+      "automerge": false
     }
   ]
 }
