@@ -116,17 +116,6 @@ Dependabot is configured via `.github/dependabot.yml`, with automerge handled by
 
 Developer docs are configured with `mkdocs.yml` and published by `.github/workflows/docs.yml`.
 
-The site is deployed to **GitHub Pages using GitHub Actions** (not a `gh-pages` branch): every push to
-`trunk` builds the site with `mkdocs build --strict` and deploys it via `actions/deploy-pages`.
-Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions** for this to work.
-
-The site is served from the custom domain <https://python-template.tmon.xyz/>, configured via
-`docs/CNAME` and `site_url` in `mkdocs.yml`. This requires a DNS record at the `tmon.xyz` provider:
-
-| Type    | Name              | Value                  |
-| ------- | ----------------- | ---------------------- |
-| `CNAME` | `python-template` | `timonviola.github.io` |
-
 ```bash
 uv sync --dev
 uv run mkdocs serve
@@ -137,5 +126,4 @@ uv run mkdocs build
 - An interactive **OpenAPI reference** page renders the live schema with Swagger UI; it's
   regenerated automatically on every `mkdocs build`/`serve` via `hooks/export_openapi.py`
   (backed by `scripts/export_openapi.py`).
-- Theme supports light mode (**white + teal**) and dark mode (**dark-gray + orange**).
 
