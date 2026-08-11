@@ -1,5 +1,6 @@
 site_name: FastAPI Template
 site_description: Developer documentation for the FastAPI template.
+site_url: https://python-template.tmon.xyz/
 
 theme:
   name: material

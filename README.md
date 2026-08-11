@@ -108,12 +108,24 @@ Dependabot is configured via `.github/dependabot.yml`, with automerge handled by
 - Python (`uv`) and GitHub Actions updates are checked **weekly** and grouped into a single PR per ecosystem.
 - Updates use a **6-day cooldown** (14 days for major bumps).
 - Transitive dependencies in `uv.lock` are refreshed too (`dependency-type: all`), the Dependabot equivalent of lock file maintenance.
-- Automerge (approve + `gh pr merge --auto --squash`) applies to all GitHub Actions updates and to non-major Python updates; major Python bumps stay manual.
+- Automerge (`gh pr merge --auto --squash`) applies to all GitHub Actions updates and to non-major Python updates; major Python bumps stay manual.
+- No approval step: `GITHUB_TOKEN` is not permitted to approve pull requests. If `trunk` ever requires approving reviews, swap in a PAT or GitHub App token.
 - Requires **Allow auto-merge** in the repository settings; merges still wait for the required CI checks.
 
 ## Documentation site (MkDocs + Material)
 
 Developer docs are configured with `mkdocs.yml` and published by `.github/workflows/docs.yml`.
+
+The site is deployed to **GitHub Pages using GitHub Actions** (not a `gh-pages` branch): every push to
+`trunk` builds the site with `mkdocs build --strict` and deploys it via `actions/deploy-pages`.
+Set **Settings → Pages → Build and deployment → Source** to **GitHub Actions** for this to work.
+
+The site is served from the custom domain <https://python-template.tmon.xyz/>, configured via
+`docs/CNAME` and `site_url` in `mkdocs.yml`. This requires a DNS record at the `tmon.xyz` provider:
+
+| Type    | Name              | Value                  |
+| ------- | ----------------- | ---------------------- |
+| `CNAME` | `python-template` | `timonviola.github.io` |
 
 ```bash
 uv sync --dev
