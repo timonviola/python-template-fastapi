@@ -108,7 +108,8 @@ Dependabot is configured via `.github/dependabot.yml`, with automerge handled by
 - Python (`uv`) and GitHub Actions updates are checked **weekly** and grouped into a single PR per ecosystem.
 - Updates use a **6-day cooldown** (14 days for major bumps).
 - Transitive dependencies in `uv.lock` are refreshed too (`dependency-type: all`), the Dependabot equivalent of lock file maintenance.
-- Automerge (approve + `gh pr merge --auto --squash`) applies to all GitHub Actions updates and to non-major Python updates; major Python bumps stay manual.
+- Automerge (`gh pr merge --auto --squash`) applies to all GitHub Actions updates and to non-major Python updates; major Python bumps stay manual.
+- No approval step: `GITHUB_TOKEN` is not permitted to approve pull requests. If `trunk` ever requires approving reviews, swap in a PAT or GitHub App token.
 - Requires **Allow auto-merge** in the repository settings; merges still wait for the required CI checks.
 
 ## Documentation site (MkDocs + Material)
@@ -125,5 +126,4 @@ uv run mkdocs build
 - An interactive **OpenAPI reference** page renders the live schema with Swagger UI; it's
   regenerated automatically on every `mkdocs build`/`serve` via `hooks/export_openapi.py`
   (backed by `scripts/export_openapi.py`).
-- Theme supports light mode (**white + teal**) and dark mode (**dark-gray + orange**).
 
