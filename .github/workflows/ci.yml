@@ -49,4 +49,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Check markdown/toml/json formatting
-        uses: dprint/check@v2.3
+        uses: dprint/check@v2.5
