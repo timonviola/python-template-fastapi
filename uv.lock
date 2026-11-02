@@ -414,7 +414,7 @@ dev = [
     { name = "httpx", specifier = ">=0.28.1,<1.0.0" },
     { name = "mkdocs", specifier = ">=1.6.1,<2.0.0" },
     { name = "mkdocs-material", specifier = ">=9.8.0,<10.0.0" },
-    { name = "mkdocstrings", extras = ["python"], specifier = ">=1.0.6,<2.0.0" },
+    { name = "mkdocstrings", extras = ["python"], specifier = ">=1.0.8,<2.0.0" },
     { name = "prek", specifier = ">=0.5.7,<1.0.0" },
     { name = "pytest", specifier = ">=9.1.1,<10.0.0" },
     { name = "pytest-cov", specifier = ">=7.1.0" },
