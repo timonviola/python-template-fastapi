@@ -40,7 +40,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Run typos
-        uses: crate-ci/typos@v1.52.0
+        uses: crate-ci/typos@v1.52.1
 
   formatting:
     name: dprint check (Rust)
@@ -49,4 +49,4 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
       - name: Check markdown/toml/json formatting
-        uses: dprint/check@v2.5
+        uses: dprint/check@v2.6
